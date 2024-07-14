@@ -2,33 +2,30 @@
   <div class="row">
     <input
       type="text"
+      class="form-control my-3"
       placeholder="Filter by customer name"
       (input)="filterTable($any($event.target).value)"
     />
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">Customer Name</th>
-          <th scope="col">Transaction</th>
+          <th class="text-center" scope="col">ID</th>
+          <th class="text-center" scope="col">Customer Name</th>
+          <th class="text-center" scope="col">Date</th>
+          <th class="text-center" scope="col">Amount</th>
         </tr>
       </thead>
       <tbody>
-        <tr
-          *ngFor="let customer of filteredCustomers"
-          (click)="selectCustomer(customer.id)"
-        >
-          <td>{{ customer.name }}</td>
-          <td>
-            <ul>
-              <li
-                *ngFor="let transaction of getTransactionsForCustomer(customer.id)"
-              >
-                Transaction Date: {{ transaction.date }}
-                Transaction Amount: {{ transaction.amount }}
-              </li>
-            </ul>
-          </td>
-        </tr>
+        <ng-container *ngFor="let customer of filteredCustomers">
+          <ng-container *ngFor="let transaction of getTransactionsForCustomer(customer.id); let j = index">
+            <tr (click)="selectCustomer(customer.id)">
+              <td *ngIf="j === 0" [attr.rowspan]="getTransactionsForCustomer(customer.id).length" class="text-center">{{ customer.id }}</td>
+              <td *ngIf="j === 0" [attr.rowspan]="getTransactionsForCustomer(customer.id).length" class="text-center">{{ customer.name }}</td>
+              <td class="text-center">{{ transaction.date }}</td>
+              <td class="text-center">{{ transaction.amount }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
       </tbody>
     </table>
   </div>
