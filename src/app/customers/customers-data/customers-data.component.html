@@ -9,10 +9,11 @@
     <table class="table">
       <thead>
         <tr>
-          <th class="text-center" scope="col">ID</th>
+          <th class="text-center" scope="col">Customer ID</th>
           <th class="text-center" scope="col">Customer Name</th>
           <th class="text-center" scope="col">Date</th>
           <th class="text-center" scope="col">Amount</th>
+          <th class="text-center" scope="col">Transaction ID</th>
         </tr>
       </thead>
       <tbody>
@@ -23,6 +24,7 @@
               <td *ngIf="j === 0" [attr.rowspan]="getTransactionsForCustomer(customer.id).length" class="text-center">{{ customer.name }}</td>
               <td class="text-center">{{ transaction.date }}</td>
               <td class="text-center">{{ transaction.amount }}</td>
+              <td class="text-center">{{ transaction.id }}</td>
             </tr>
           </ng-container>
         </ng-container>
