@@ -1,6 +1,15 @@
+<div class="container my-4">
+  <div class="row">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page"  routerLink="/customers" routerLinkActive="active">Customers</a>
 
-<nav>
-  <a routerLink="/customers" routerLinkActive="active">Customers</a>
-  <a routerLink="/transactions" routerLinkActive="active">Transactions</a>
-</nav>
-<router-outlet></router-outlet>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" routerLink="/transactions" routerLinkActive="active">Transactions</a>
+      </li>
+    </ul>
+
+    <router-outlet></router-outlet>
+  </div>
+</div>

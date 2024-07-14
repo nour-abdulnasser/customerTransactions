@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Input, OnChanges } from '@angular/core';
+// transaction.component.ts
+import { Component, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Chart, ChartConfiguration } from 'chart.js';
 import { TransactionService } from 'src/app/transactions.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { TransactionService } from 'src/app/transactions.service';
 })
 export class TransactionsDataComponent implements OnChanges {
   @Input() customerId: number = 0;
+  @ViewChild('lineChart') lineChart!: ElementRef<HTMLCanvasElement>;
+
   transactions: any[] = [];
   graphData: any[] = [];
 
@@ -19,6 +22,7 @@ export class TransactionsDataComponent implements OnChanges {
       this.transactionService.getTransactions().subscribe(transactions => {
         this.transactions = transactions.filter((transaction: any) => transaction.customer_id === this.customerId);
         this.prepareGraphData();
+        this.createChart();
       });
     }
   }
@@ -34,10 +38,49 @@ export class TransactionsDataComponent implements OnChanges {
     }, {});
 
     this.graphData = Object.keys(data).map(date => ({
-      name: date,
-      value: data[date]
+      date,
+      amount: data[date]
     }));
   }
+
+  createChart(): void {
+    const dates = this.graphData.map(d => d.date);
+    const amounts = this.graphData.map(d => d.amount);
+
+    const chartConfig: ChartConfiguration = {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [
+          {
+            label: 'Total Amount',
+            data: amounts,
+            borderColor: 'rgba(75,192,192,1)',
+            backgroundColor: 'rgba(75,192,192,0.2)',
+            fill: true,
+          }
+        ]
+      },
+      options: {
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Date'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Amount'
+            }
+          }
+        }
+      }
+    };
+
+    if (this.lineChart && this.lineChart.nativeElement) {
+      new Chart(this.lineChart.nativeElement, chartConfig);
+    }
+  }
 }
-
-
