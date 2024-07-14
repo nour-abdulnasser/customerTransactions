@@ -2,14 +2,17 @@
   <div class="row">
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page"  routerLink="/customers" routerLinkActive="active">Customers</a>
-
+        <a class="nav-link active" aria-current="page" routerLink="/customers" routerLinkActive="active">Customers</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" routerLink="/transactions" routerLinkActive="active">Transactions</a>
+        <a class="nav-link active" aria-current="page" routerLink="/transactions">Transactions</a>
       </li>
     </ul>
 
     <router-outlet></router-outlet>
   </div>
 </div>
+<!-- <div class="container my-4">
+  <app-customer-table (customerSelected)="onCustomerSelect($event)"></app-customer-table>
+  <app-transactions-data [customerId]="selectedCustomerId"></app-transactions-data>
+</div> -->

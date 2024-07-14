@@ -9,26 +9,27 @@
       <thead>
         <tr>
           <th scope="col">Customer Name</th>
-          <th scope="col">Transactions</th>
+          <th scope="col">Transaction</th>
         </tr>
       </thead>
-      <tr
-        *ngFor="let customer of filteredCustomers"
-        (click)="selectCustomer(customer.id)"
-      >
-        <td>{{ customer.name }}</td>
-        <td>
-          <ul>
-            <li
-              *ngFor="
-                let transaction of getTransactionsForCustomer(customer.id)
-              "
-            >
-              {{ transaction.date }} - {{ transaction.amount }}
-            </li>
-          </ul>
-        </td>
-      </tr>
+      <tbody>
+        <tr
+          *ngFor="let customer of filteredCustomers"
+          (click)="selectCustomer(customer.id)"
+        >
+          <td>{{ customer.name }}</td>
+          <td>
+            <ul>
+              <li
+                *ngFor="let transaction of getTransactionsForCustomer(customer.id)"
+              >
+                Transaction Date: {{ transaction.date }}
+                Transaction Amount: {{ transaction.amount }}
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </div>

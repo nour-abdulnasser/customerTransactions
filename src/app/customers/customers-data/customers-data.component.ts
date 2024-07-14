@@ -7,8 +7,6 @@ import { TransactionService } from 'src/app/transactions.service';
   templateUrl: './customers-data.component.html',
   styleUrls: ['./customers-data.component.css']
 })
-
-
 export class CustomersDataComponent implements OnInit {
   customers: any[] = [];
   transactions: any[] = [];
@@ -37,7 +35,7 @@ export class CustomersDataComponent implements OnInit {
   }
 
   getTransactionsForCustomer(customerId: number): any[] {
-    return this.transactions.filter(transaction => transaction.customer_id === customerId);
+    return this.transactions.filter(transaction => transaction.customer_id == customerId);
   }
 
   selectCustomer(customerId: number): void {
