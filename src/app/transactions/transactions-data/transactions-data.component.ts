@@ -1,4 +1,3 @@
-// transaction.component.ts
 import { Component, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { Chart, ChartConfiguration } from 'chart.js';
 import { TransactionService } from 'src/app/transactions.service';

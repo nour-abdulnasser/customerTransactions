@@ -1,8 +1,6 @@
-<!-- transactions-data.component.html -->
 <div *ngIf="graphData.length > 0">
-    <canvas #lineChart></canvas>
-  </div>
-  <div *ngIf="graphData.length === 0">
-    No transactions available for the selected customer.
-  </div>
-  
+  <canvas #lineChart></canvas>
+</div>
+<div *ngIf="graphData.length === 0">
+  No transactions available for the selected customer.
+</div>

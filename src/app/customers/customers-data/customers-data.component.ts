@@ -43,9 +43,8 @@ export class CustomersDataComponent implements OnInit {
   }
 
   selectCustomer(customerId: number): void {
+    console.log(customerId);
+    
     this.customerSelected.emit(customerId);
   }
-
-  
-  
 }

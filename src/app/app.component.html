@@ -9,10 +9,12 @@
       </li>
     </ul>
 
-    <router-outlet></router-outlet>
+    <div class="col-md-6">
+      <app-customer-table (customerSelected)="onCustomerSelect($event)"></app-customer-table>
+    </div>
+    <div class="col-md-6">
+      <app-transactions-data [customerId]="selectedCustomerId"></app-transactions-data>
+    </div>
   </div>
 </div>
-<!-- <div class="container my-4">
-  <app-customer-table (customerSelected)="onCustomerSelect($event)"></app-customer-table>
-  <app-transactions-data [customerId]="selectedCustomerId"></app-transactions-data>
-</div> -->
+
