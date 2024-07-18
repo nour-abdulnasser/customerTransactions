@@ -1,25 +1,38 @@
-import { Component, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
-import { Chart, ChartConfiguration } from 'chart.js';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Chart, registerables } from 'chart.js';
+import 'chartjs-adapter-date-fns';
 import { TransactionService } from 'src/app/transactions.service';
+
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-transactions-data',
   templateUrl: './transactions-data.component.html',
-  styleUrls: ['./transactions-data.component.css']
+  styleUrls: ['./transactions-data.component.css'],
 })
-export class TransactionsDataComponent implements OnChanges {
-  @Input() customerId: number = 0;
-  @ViewChild('lineChart') lineChart!: ElementRef<HTMLCanvasElement>;
-
+export class TransactionsDataComponent implements OnInit {
+  customerId!: number;
   transactions: any[] = [];
   graphData: any[] = [];
+  chart: any;
 
-  constructor(private transactionService: TransactionService) { }
+  constructor(private transactionService: TransactionService) {}
 
-  ngOnChanges(): void {
+  ngOnInit(): void {
+    this.transactionService.currentCustomer.subscribe((id) => {
+      this.customerId = id;
+      console.log(this.customerId, 'from transactions');
+      this.loadTransactions();
+    });
+  }
+
+  loadTransactions(): void {
     if (this.customerId) {
-      this.transactionService.getTransactions().subscribe(transactions => {
-        this.transactions = transactions.filter((transaction: any) => transaction.customer_id === this.customerId);
+      this.transactionService.getTransactions().subscribe((allTransactions) => {
+        this.transactions = allTransactions.filter((transaction: any) => {
+          return transaction.customer_id == this.customerId;
+        });
+        console.log(this.transactions, 'filtered transactions');
         this.prepareGraphData();
         this.createChart();
       });
@@ -36,50 +49,52 @@ export class TransactionsDataComponent implements OnChanges {
       return acc;
     }, {});
 
-    this.graphData = Object.keys(data).map(date => ({
-      date,
-      amount: data[date]
+    this.graphData = Object.keys(data).map((date) => ({
+      name: date,
+      value: data[date],
     }));
+
+    if (this.chart) {
+      this.chart.data.labels = this.graphData.map(d => d.name);
+      this.chart.data.datasets[0].data = this.graphData.map(d => d.value);
+      this.chart.update();
+    }
   }
 
-  createChart(): void {
-    const dates = this.graphData.map(d => d.date);
-    const amounts = this.graphData.map(d => d.amount);
+  createChart() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
 
-    const chartConfig: ChartConfiguration = {
+    const ctx = document.getElementById('chart') as HTMLCanvasElement;
+    this.chart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: dates,
+        labels: this.graphData.map(d => d.name),
         datasets: [
           {
-            label: 'Total Amount',
-            data: amounts,
-            borderColor: 'rgba(75,192,192,1)',
-            backgroundColor: 'rgba(75,192,192,0.2)',
-            fill: true,
-          }
-        ]
+            label: 'Transaction Amount',
+            data: this.graphData.map(d => d.value),
+            fill: false,
+            borderColor: 'blue',
+            tension: 0.1,
+          },
+        ],
       },
       options: {
+        responsive: true,
         scales: {
           x: {
-            title: {
-              display: true,
-              text: 'Date'
-            }
+            type: 'time',
+            time: {
+              unit: 'day',
+            },
           },
           y: {
-            title: {
-              display: true,
-              text: 'Amount'
-            }
-          }
-        }
-      }
-    };
-
-    if (this.lineChart && this.lineChart.nativeElement) {
-      new Chart(this.lineChart.nativeElement, chartConfig);
-    }
+            beginAtZero: true,
+          },
+        },
+      },
+    });
   }
 }

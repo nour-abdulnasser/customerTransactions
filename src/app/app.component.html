@@ -10,10 +10,11 @@
     </ul>
 
     <div class="col-md-6">
-      <app-customer-table (customerSelected)="onCustomerSelect($event)"></app-customer-table>
-    </div>
-    <div class="col-md-6">
-      <app-transactions-data [customerId]="selectedCustomerId"></app-transactions-data>
+      <div class="col-md-12">
+        <!-- <app-customer-table (customerSelected)="onCustomerSelect($event)"></app-customer-table> -->
+        <app-customer-table ></app-customer-table>
+        <app-transactions-data></app-transactions-data>
+      </div>
     </div>
   </div>
 </div>

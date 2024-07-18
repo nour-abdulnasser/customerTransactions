@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TransactionService } from './transactions.service';
 
 @Component({
   selector: 'app-root',
@@ -6,10 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  constructor(private transactionService: TransactionService){
+
+  }
   selectedCustomerId: number = 0;
   title = 'customerTransacs';
 
-  onCustomerSelect(customerId: number): void {
-    this.selectedCustomerId = customerId;
-  }
+ 
 }

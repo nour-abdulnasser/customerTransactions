@@ -1,6 +1,7 @@
-<div *ngIf="graphData.length > 0">
-  <canvas #lineChart></canvas>
-</div>
-<div *ngIf="graphData.length === 0">
-  No transactions available for the selected customer.
+<div class="container text-center m-auto">
+  <div class="col-md-6">
+    <div class="chart-container mt-5 shadow bg-white">
+      <canvas id="chart">{{ chart }}</canvas>
+    </div>
+  </div>
 </div>

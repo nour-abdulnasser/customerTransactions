@@ -12,8 +12,7 @@ export class CustomersDataComponent implements OnInit {
   transactions: any[] = [];
   filteredCustomers: any[] = [];
 
-  @Output() customerSelected = new EventEmitter<number>();
-
+  customerSelected!: number;
   constructor(
     private customerService: CustomerService,
     private transactionService: TransactionService
@@ -42,9 +41,15 @@ export class CustomersDataComponent implements OnInit {
     );
   }
 
-  selectCustomer(customerId: number): void {
-    console.log(customerId);
-    
-    this.customerSelected.emit(customerId);
+  onCustomerSelect(customerId: number): void {
+    // console.log(' event from custo data component', customerId);
+
+    this.transactionService.setSelectedCustomer(customerId);
+    // console.log(
+    //   this.transactionService.currentCustomer.subscribe((par) =>
+    //     console.log(par, 'from par')
+    //   ),
+    //   'current custo'
+    // );
   }
 }

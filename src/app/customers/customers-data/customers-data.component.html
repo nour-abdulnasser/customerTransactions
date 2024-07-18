@@ -21,7 +21,7 @@
           <ng-container *ngFor="let transaction of getTransactionsForCustomer(customer.id); let j = index">
             <tr >
               <td *ngIf="j === 0" [attr.rowspan]="getTransactionsForCustomer(customer.id).length" class="text-center">{{ customer.id }}</td>
-              <td routerLink="" *ngIf="j === 0" [attr.rowspan]="getTransactionsForCustomer(customer.id).length" class="text-center text-decoration-underline text-primary" (click)="selectCustomer(customer.id)">{{ customer.name }}</td>
+              <td routerLink="" *ngIf="j === 0" [attr.rowspan]="getTransactionsForCustomer(customer.id).length" class="text-center text-decoration-underline text-primary" (click)="onCustomerSelect(customer.id)">{{ customer.name }}</td>
               <td class="text-center">{{ transaction.date }}</td>
               <td class="text-center">{{ transaction.amount }}</td>
               <td class="text-center">{{ transaction.id }}</td>
