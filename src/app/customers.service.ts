@@ -6,11 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CustomerService {
-  private baseUrl = 'assets/customers.json';
+  // private baseUrl = 'http://localhost:3000/';
+  private baseUrl = '../assets/customers.json';
 
   constructor(private http: HttpClient) {}
 
   getCustomers(): Observable<any> {
-    return this.http.get(this.baseUrl);
+    return this.http.get(this.baseUrl );
   }
 }
