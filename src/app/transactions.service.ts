@@ -10,7 +10,7 @@ export class TransactionService {
   public customerSelected = new BehaviorSubject(0)
   currentCustomer = this.customerSelected.asObservable();
 
-  private baseUrl = 'http://localhost:3000/';
+  private baseUrl = 'assets/db.json/';
 
   constructor(private http: HttpClient) {}
 

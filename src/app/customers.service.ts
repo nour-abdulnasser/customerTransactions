@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CustomerService {
-  private baseUrl = 'http://localhost:3000/';
+  private baseUrl = 'assets/db.json/';
 
   constructor(private http: HttpClient) {}
 
